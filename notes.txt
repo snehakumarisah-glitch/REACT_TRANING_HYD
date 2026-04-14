@@ -1,0 +1,30 @@
+github link:
+https://github.com/aniljos/REST-API-Mock
+https://github.com/snehakumarisah-glitch/REACT_TRANING_HYD
+
+
+notes:
+https://github.com/aniljos/react-nextjs-april-2026/blob/main/class-notes.md
+
+
+doc link:
+https://react.dev/reference/react/useEffect
+https://getbootstrap.com/
+https://legacy.reactjs.org/
+https://reactrouter.com/home
+https://reactrouter.com/api/hooks/useNavigate
+
+
+
+api details for local use:
+1. post api : 
+url: http://localhost:9000/login 
+body: {
+    "name": "abc",
+    "password": "abc@123"
+}
+
+2. get api:
+url:http://localhost:9000/products
+
+3. 

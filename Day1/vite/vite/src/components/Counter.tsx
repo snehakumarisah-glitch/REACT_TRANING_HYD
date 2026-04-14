@@ -1,6 +1,6 @@
 // <Counter initCount={5}/>
 
-import { useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 
 type CounterProps = {
     initCount: number;
@@ -11,6 +11,9 @@ const Counter: React.FC<CounterProps> = ({initCount}) => {
 
     const [count, setCount] = useState(initCount);
 
+    useEffect(()=> {
+        console.log("count updated",count);
+          },[count]);
     function increment(){
         console.log("inc involved");
         //initCount++;

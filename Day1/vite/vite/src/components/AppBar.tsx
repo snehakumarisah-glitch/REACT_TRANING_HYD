@@ -3,6 +3,7 @@ function AppBar() {
 
     return(
     //<nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar bg-dark border-bottom border-body">
     <div className="container-fluid">
     <Link className="navbar-brand" to="#">React</Link>
 
@@ -22,6 +23,7 @@ function AppBar() {
     </ul>
 
     </div>
+      </nav>
   )
 
 //   return(
