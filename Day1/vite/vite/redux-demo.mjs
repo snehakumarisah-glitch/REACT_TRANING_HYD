@@ -10,6 +10,22 @@ const state= {
 }
 //reducer
 const reducer = (currentState=state , action) => {
+    if(action.type === "increment_ctr") {
+        return {...currentState,
+        count: currentState.count + 1
+        }
+    } 
+    if(action.type === "decrement_ctr") {
+        return {...currentState,
+        count: currentState.count + 1
+        }
+    }
+
+     if(action.type === "update_ctr") {
+        return {...currentState,
+        count: action.value
+        }
+    }
     return currentState;
 }
 
@@ -18,6 +34,14 @@ const reducer = (currentState=state , action) => {
 const store= createStore(reducer)
 console.log("state", store.getState());
 
-//subscribe
+//subscribe whenever store changes it calls this method
+store.subscribe(() => {
+    console.log("state update", store.getState());
+}
+)
 
 //dispatch actions
+store.dispatch({type: "increment_ctr"});
+store.dispatch({type: "update_ctr", value:100});
+store.dispatch({type: "decrement_ctr"});
+
