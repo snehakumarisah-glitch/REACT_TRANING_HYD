@@ -14,6 +14,7 @@ const Counter: React.FC<CounterProps> = ({initCount}) => {
     useEffect(()=> {
         console.log("count updated",count);
           },[count]);
+          
     function increment(){
         console.log("inc involved");
         //initCount++;

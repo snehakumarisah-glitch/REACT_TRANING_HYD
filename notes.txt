@@ -13,6 +13,7 @@ https://getbootstrap.com/
 https://legacy.reactjs.org/
 https://reactrouter.com/home
 https://reactrouter.com/api/hooks/useNavigate
+https://reactrouter.com/api/hooks/useParams
 
 
 
