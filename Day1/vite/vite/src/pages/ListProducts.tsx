@@ -1,84 +1,87 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import type { Product } from "../model/product";
-import './ListProducts.css';
+import "./ListProducts.css";
 import { useNavigate } from "react-router-dom";
+import { useTitle } from "../hooks/useTitle";
+import { Product } from "../model/product";
+import useProducts from "../hooks/useProducts";
+import { useState } from "react";
+import ProductView from "../components/ProductView";
+    
+const imgUrl = "http://localhost:9000"
+//const url = "http://localhost:9000/products";
+const url = "http://localhost:9000/secure_products";
 
-const url = "http://localhost:9000/products";
+
 
 function ListProductsPage() {
 
-    const [products, setProducts] = useState<Product[]>([]);
+    useProducts(url);
+    const {products, setProducts} = useProducts(url); 
     const navigate = useNavigate();
+   // useTitle("List Products");
+   const [isMessageVisible, setVisible] = useState(true);
 
-    async function fetchProducts() {
-        try {
-            const response = await axios.get<Product[]>(url);
-            setProducts(response.data);
-            console.log(response);
-
-        } catch(error){
-
-        }
-    }
-    
-    useEffect(() => {
-        fetchProducts();
-        
-    },[]);
 
     async function handleDelete(product: Product){
-        const url = "http://localhost:9000/products"
+
         try{
             const deleteUrl = url + "/" + product.id;
             await axios.delete(deleteUrl);
-            //await fetchProducts();
 
-            /** state is immutatble we cannot modify state in react**/
-            // const index = products.findIndex(item => item.id === product.id);
-            // products.splice(index,1);
-            // setProducts(products);
-
-             /** to avoid modifiying state we will copy the product**/
-            const copy = [...products]
-            const index = copy.findIndex(item => item.id === product.id);
-            copy.splice(index,1);
-            setProducts(copy);
-        }catch {
-            alert("failed to delete");
+            const index = products.findIndex(item => item.id === product.id);
+            products.splice(index, 1);
+            setProducts(products);
+        } catch(error){
+        alert("failed to  delete");
         }
-
     }
 
     async function handleEdit(product: Product){
-        navigate("/products/"+product.id, {state:product});
+        navigate("/products/" + product.id);
     }
 
-    return(
-        <div>
-            <h3>
-                List Products
-            </h3>
-            <div style={{display: 'flex', flexFlow: 'row wrap', justifyContent:'center'}}>
-                {
-                products.map(product => {
-                    return(
-                        <div className="product" key={product.id}>
-                            <p>Id: {product.id}</p>
-                            <p>Name: {product.name}</p>
-                            <p>Description: {product.description}</p>
-                            <p>Price: {product.price}</p>
-                            <div>
-                                <button className="btn btn-danger" onClick={()=> {handleDelete(product)}}>Delete</button>
-                                <button className="btn btn-danger" onClick={()=> {handleEdit(product)}}>Edit</button>
-                            </div>  
 
-                        </div>
+   
+
+    return (
+        <div>
+            <h3>List of Products</h3>
+
+            {isMessageVisible? <div className="alert alert-info">Demo for listProducts</div> : null}
+            <br/>
+            <button className="btn btn-info"
+                onClick={() => setVisible(!isMessageVisible)}>
+                {isMessageVisible? "Hide": "Show"}
+            </button>
+
+            <div style={{display: 'flex', flexFlow: 'row wrap', justifyContent: 'center'}}>
+                {products.map((product) => {
+                    return(
+
+                    <ProductView product={product}/>
+                    // <div className="product" key={product.id}> 
+                    //     <img src={"http://localhost:9000" + product.imageUrl}  />
+                    //     <p><strong>ID:</strong> {product.id}</p>
+                    //     <p><strong>Name:</strong> {product.name}</p>
+                    //     <p><strong>Description:</strong> {product.description}</p>
+                    //     <p><strong>Price:</strong> ${product.price}</p>
+                    //     <div>
+                    //         <button className="btn btn-info" onClick={() => handleEdit(product)}>EDIT</button>
+                    //         <button className="btn btn-danger" onClick={() => handleDelete(product)}>DELETE</button>
+                    //     </div>
+                    // </div>
                     )
-                })}
+}                )}
             </div>
         </div>
-    )
+    );
+                                                                                                       
+
+
+
+
+
+
 }
 
 export default ListProductsPage;

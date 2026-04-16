@@ -1,6 +1,6 @@
 // <Counter initCount={5}/>
 
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useRef, useState, type ChangeEvent } from "react";
 
 type CounterProps = {
     initCount: number;
@@ -10,6 +10,9 @@ type CounterProps = {
 const Counter: React.FC<CounterProps> = ({initCount}) => {
 
     const [count, setCount] = useState(initCount);
+     //let clickCount = 0;
+    const clickCount = useRef(0); //mutableObject unlike state
+   
 
     useEffect(()=> {
         console.log("count updated",count);
@@ -20,7 +23,11 @@ const Counter: React.FC<CounterProps> = ({initCount}) => {
         //initCount++;
         //setCount(count + 1);
         //setCount(count + 1);
-        setCount((count) => count+1); //invoke the call back
+        setCount((count) => count+1); //invoke the call back function // it rerendering the component 
+        //clickCount++;
+        clickCount.current++;
+
+        console.log("clickCount", clickCount);
     }
 
     function decrement(){

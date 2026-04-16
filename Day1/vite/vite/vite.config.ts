@@ -6,6 +6,7 @@ import babel from '@rolldown/plugin-babel'
 export default defineConfig({
   plugins: [
     react(),
-    babel({ presets: [reactCompilerPreset()] })
+    //babel({ presets: [reactCompilerPreset()] }) // used in case without memo impl
+    babel({ presets: [] }) //used in case of REact memo impl
   ],
 })

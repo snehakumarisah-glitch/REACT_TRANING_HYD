@@ -1,6 +1,8 @@
 import {useState, type MouseEvent, useRef, useEffect} from "react";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useTitle } from "../hooks/useTitle";
 
 function LoginPage() {
 
@@ -9,10 +11,16 @@ function LoginPage() {
     const [message, setMessage] = useState("");
     const usernameInputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+  
 
     useEffect(()=> {
         console.log("login component mounted");
-        usernameInputRef.current.focus();
+        usernameInputRef.current?.focus();
+
+        return () => {
+            console.log("login component unmounted");
+        }
 
     },[]);
 
@@ -20,25 +28,30 @@ function LoginPage() {
         e.preventDefault();
         
         usernameInputRef.current.focus();
+       // useTitle("Login");
 
         if(userName && password){
-            //validate
-            try {
-                const url = "http://localhost:9000/login";
-            
-                const response = await axios.post(url,{
-                                "name": userName,
-                                "password": password
-                            });
-                console.log("response:", response);
-                setMessage("");
-                navigate("/");
-            } catch(error) {
-                console.log("failed:", error);
-                setMessage("Invalid Credential");
-            }
+        try {
+            const url = "http://localhost:9000/login";
+            const response = await axios.post(url, {name: userName, password});
+            console.log("success", response);
+            setMessage("");
 
-             setMessage("");
+            dispatch({type: "login", payload: {
+                isAuthenticated: true,
+                userName,
+                accessToken: response.data.accessToken,
+                refreshToken: response.data.refreshToken
+            }});
+
+            navigate("/");
+        } catch (error) {
+            setMessage("Invalid username or password");
+            dispatch({type: "logout"});
+        }
+
+        //VALIDATING 
+        setMessage("");
         } else{
             setMessage('Enter the Credential');
         }
