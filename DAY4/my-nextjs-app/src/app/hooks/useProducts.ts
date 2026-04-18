@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { AppState } from "../redux/store";
 import type { Product } from "../model/product";
-    
+import { useRouter } from "next/navigation";
 const imgUrl = "http://localhost:9000"
 //const url = "http://localhost:9000/products";
 const url = "http://localhost:9000/secure_products";
@@ -14,14 +13,16 @@ const url = "http://localhost:9000/secure_products";
 export function useProducts(url: string) {
 
    const [products, setProducts] = useState<Product[]>([]); 
-   const navigate = useNavigate();
+   //const navigate = useNavigate();
+   const router = useRouter();
     const auth = useSelector((state : AppState) => state.auth);
 
     async function fetchProducts(signal: AbortSignal){
         try {
 
-            if(!auth.isAuthenticated) {
-                navigate("/login");
+            if(!auth?.isAuththenticated) {
+                //navigate("/login");
+                router.push("/login");
                 return;
             }
 

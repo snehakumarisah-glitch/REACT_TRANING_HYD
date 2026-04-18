@@ -1,20 +1,18 @@
-import './ListProducts.css';
-import { useNavigate } from "react-router-dom";
+"use client"
 import { useSelector } from "react-redux";
 import type { AppState } from "../redux/store";
 import { useTitle } from "../hooks/useTitle";
 import { useState, useCallback } from "react";
-import ProductView from "../components/ProductView";
 import useProducts from '../hooks/useProducts';
 import type { Product } from '../model/product';
+import { useRouter } from 'next/navigation';
+import ProductView from '../component/ProductView';
 
 function ListProducts() {
 
-
-
-    const url = 'http://localhost:9000/secure_products';
+    const url = 'http://localhost:9000/products';
+    const router = useRouter();
     const { products, setProducts } = useProducts(url);
-    const navigate = useNavigate();
     const auth = useSelector((state: AppState) => state.auth);
     useTitle("List Products");
     const [isMessageVisible, setMessageVisible] = useState(true);
@@ -33,8 +31,8 @@ function ListProducts() {
 
     
     const onhandleEdit = useCallback(async (product: Product) => {
-        navigate("/products/" + product.id, {state: {products}})
-    },[navigate]);
+        router.push("/products/" + product.id)
+    },[router]);
 
     const calculateTotalPrice = () => {
         let total = 0;

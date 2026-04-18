@@ -1,10 +1,14 @@
 github link:
 https://github.com/aniljos/REST-API-Mock
 https://github.com/snehakumarisah-glitch/REACT_TRANING_HYD
-
+https://github.com/Salam4187/React/blob/day1/vite-project-Day1/first-vite-project
 
 notes:
-https://github.com/aniljos/react-nextjs-april-2026/blob/main/class-notes.md
+1. https://github.com/aniljos/react-nextjs-april-2026/blob/main/class-notes.md
+2. junit testing installs - npm install -D vitest @testing-library/react @testing-library/user-event @testing-library/jest-dom jsdom
+3. under script in package.json add belw:
+"test": "vitest run",
+"test:watch": "vitest"
 
 
 doc link:
@@ -14,6 +18,7 @@ https://legacy.reactjs.org/
 https://reactrouter.com/home
 https://reactrouter.com/api/hooks/useNavigate
 https://reactrouter.com/api/hooks/useParams
+https://react.dev/reference/react-compiler/directives
 
 
 

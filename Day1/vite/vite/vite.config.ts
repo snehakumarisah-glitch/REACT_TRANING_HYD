@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 
@@ -9,4 +9,9 @@ export default defineConfig({
     //babel({ presets: [reactCompilerPreset()] }) // used in case without memo impl
     babel({ presets: [] }) //used in case of REact memo impl
   ],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+  },
 })
